@@ -7,8 +7,10 @@ public class Driver {
 
     private int secondsToWaitInSlowTrafficBeforeLaneChange;
     private float preferredCruisingSpeed; // MPH
-    private int safeDistanceFromFrontCar; // Feet
-    private int safeGapWithRearCarForLaneChange;
+    private long safeDistanceFromFrontCarToAccelerate; // Feet
+    private long safeDistanceFromFrontCarForLaneChange;
+    private long safeDistanceFromFrontCarForCruising;
+    private long safeGapWithRearCarForLaneChange;
 
 
 }
