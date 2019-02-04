@@ -1,13 +1,15 @@
 package in.net.kuldeep.model;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 public class Lane {
-    private int numberOnHighway;
-    private long startLocation;
-    private long endLocation;
-    private SortedArrayList<Car> cars;
+    private final int numberOnHighway;
+    private final long startLocation;
+    private final long endLocation;
+    private SortedArrayList<Car> cars = new SortedArrayList<>();
 
     public void addCar(Car car) {
         cars.insertSorted(car);
@@ -28,7 +30,7 @@ public class Lane {
 
     public Car findCarInBack(Car car) {
         int index = cars.indexOf(car);
-        if (index < (cars.size() + 1)) {
+        if ((index + 1) < cars.size()) {
             return cars.get(index + 1);
         } else {
             return null;
@@ -46,5 +48,23 @@ public class Lane {
             }
         }
         return closest;
+    }
+
+    public boolean checkForCollision() {
+        long previousLoc = Long.MAX_VALUE;
+        for (int i = 0; i < cars.size(); i++) {
+            long carLoc = cars.get(i).getCurrentPosition().getLocationOnHighway();
+            if (previousLoc == carLoc) {
+                System.out.println("Collision in Lane:" + numberOnHighway + " at " + carLoc);
+                return true;
+            }
+            previousLoc = carLoc;
+        }
+        return false;
+    }
+
+    public String printStats() {
+        return "L:" + numberOnHighway + "; C:" + cars.size() + "; P:" + cars.get(0).getCurrentPosition().getLocationOnHighway() + "; S:" +
+                cars.get(0).getCurrentPosition().getSpeed();
     }
 }
