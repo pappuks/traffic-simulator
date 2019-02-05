@@ -55,7 +55,13 @@ public class Lane {
         for (int i = 0; i < cars.size(); i++) {
             long carLoc = cars.get(i).getCurrentPosition().getLocationOnHighway();
             if (previousLoc == carLoc) {
-                System.out.println("Collision in Lane:" + numberOnHighway + " at " + carLoc);
+                System.out.println("Collision in Lane:" + numberOnHighway + " at " + carLoc +
+                        "; C:" + i + "; S:" + cars.get(i).getCurrentPosition().getSpeed() +
+                        "; PP:" + cars.get(i).getPreviousPosition().getLocationOnHighway() +
+                        "; SP:" + cars.get(i).getPreviousPosition().getSpeed() +
+                        "; C:" + (i - 1) + "; S:" + cars.get(i - 1).getCurrentPosition().getSpeed() +
+                        "; PP:" + cars.get(i - 1).getPreviousPosition().getLocationOnHighway() +
+                        "; SP:" + cars.get(i - 1).getPreviousPosition().getSpeed());
                 return true;
             }
             previousLoc = carLoc;

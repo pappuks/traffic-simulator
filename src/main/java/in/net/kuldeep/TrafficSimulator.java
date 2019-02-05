@@ -58,7 +58,7 @@ public class TrafficSimulator {
         highway = new Highway();
 
         List<Lane> lanes = new ArrayList<>();
-        IntStream.range(1, 5).forEach(i -> lanes.add(new Lane(i, 0, 20000)));
+        IntStream.range(1, 2).forEach(i -> lanes.add(new Lane(i, 0, 20000)));
         highway.setLanes(lanes);
 
         startSpeeds = new ArrayList<>();
@@ -75,9 +75,13 @@ public class TrafficSimulator {
 
     public void addCars() {
         highway.getLanes().forEach(l -> {
+            Float carSpeed = startSpeeds.get(random.nextInt(startSpeeds.size()));
+            if (l.getCars().size() > 0) {
+                carSpeed = l.getCars().get(0).getCurrentPosition().getSpeed();
+            }
             Car car = new Car();
             car.setDriver(drivers.get(random.nextInt(drivers.size())));
-            car.setStartPosition(l, startSpeeds.get(random.nextInt(startSpeeds.size())));
+            car.setStartPosition(l, carSpeed);
             car.setExitLocationOnHighway(20000);
             l.addCar(car);
         });

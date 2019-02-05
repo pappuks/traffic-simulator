@@ -47,6 +47,7 @@ public class Car {
     private Driver driver;
     private Position currentPosition;
     private Position nextPosition;
+    private Position previousPosition;
     private long entryLocationOnHighway;
     private long exitLocationOnHighway;
     private final long EXIT_DISTANCE_THRESHOLD = 2 * ONE_MILE; // 2 Miles
@@ -67,9 +68,11 @@ public class Car {
 
         if (nextPosition.lane.getNumberOnHighway() != currentPosition.lane.getNumberOnHighway()) {
             currentPosition.lane.removeCar(this);
+            previousPosition = currentPosition.clone();
             currentPosition = nextPosition.clone();
             currentPosition.lane.addCar(this);
         } else {
+            previousPosition = currentPosition.clone();
             currentPosition = nextPosition.clone();
         }
     }
@@ -183,7 +186,7 @@ public class Car {
     }
 
     public long compareLocationTo(Car toCompare) {
-        return (this.currentPosition.locationOnHighway - toCompare.currentPosition.locationOnHighway);
+        return (toCompare.currentPosition.locationOnHighway - this.currentPosition.locationOnHighway);
     }
 
 
