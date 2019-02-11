@@ -93,7 +93,9 @@ public class Car {
                     }
                 } else if (distanceFromFrontCar < driver.getSafeDistanceFromFrontCarForFollowing()) {
                     // Slow down as we don't have much gap
-                    nextPosition.speed -= 2 * acceleration; // slow down faster
+                    //nextPosition.speed -= 2 * acceleration; // slow down faster
+                    //nextPosition.speed = proximity.getFront().getCurrentPosition().getSpeed() - acceleration;
+                    nextPosition.speed = speedFromDistanceTravelledInSecond(distanceFromFrontCar - 2);
                 } else if (distanceFromFrontCar > driver.getSafeDistanceFromFrontCarForLaneChange()) {
                     // Try to see if we can change lanes
                     switch (canChangeLanes(proximity)) {
@@ -115,6 +117,10 @@ public class Car {
 
         nextPosition.updateLocationBasedOnSpeed();
         // Change lanes when switching from next position to current position
+    }
+
+    private float speedFromDistanceTravelledInSecond(long distance) {
+        return (float)(distance * 3600) / ONE_MILE;
     }
 
     private LaneChange canChangeLanes(Highway.Proximity proximity) {

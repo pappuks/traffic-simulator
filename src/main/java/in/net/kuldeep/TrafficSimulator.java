@@ -27,10 +27,16 @@ public class TrafficSimulator {
         while (true) {
             trafficSimulator.addCars();
             trafficSimulator.highway.getLanes().forEach(l -> {
-                l.getCars().forEach(c -> c.calculateNextPosition(trafficSimulator.highway));
+                Car[] cArray = l.getCars().toArray(new Car[]{});
+                for(Car c : cArray) {
+                    c.calculateNextPosition(trafficSimulator.highway);
+                }
             });
             trafficSimulator.highway.getLanes().forEach(l -> {
-                l.getCars().forEach(c -> c.makeNextPositionAsCurrent());
+                Car[] cArray = l.getCars().toArray(new Car[]{});
+                for(Car c : cArray) {
+                    c.makeNextPositionAsCurrent();
+                }
             });
 
             boolean accident = false;
